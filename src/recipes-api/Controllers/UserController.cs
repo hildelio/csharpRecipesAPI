@@ -38,7 +38,6 @@ public class UserController : ControllerBase
         }     
     }
 
-    // 7 - Sua aplicação deve ter o endpoint POST /user
     [HttpPost]
     public IActionResult Create([FromBody]User user)
     {
@@ -54,7 +53,24 @@ public class UserController : ControllerBase
     [HttpPut("{email}")]
     public IActionResult Update(string email, [FromBody]User user)
     {
-        throw new NotImplementedException();
+        if (user == null)
+        {
+            return NotFound();
+        }
+        bool existUser = _service.UserExists(email);
+        if (!existUser)
+        {
+            return BadRequest("Usuário não existe");
+        }
+        try
+        {
+            _service.UpdateUser(user);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }
 
     // 9 - Sua aplicação deve ter o endpoint DEL /user
