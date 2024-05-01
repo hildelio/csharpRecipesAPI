@@ -45,7 +45,6 @@ public class RecipesController : ControllerBase
         return Created("", recipe);
     }
 
-    // 4 - Sua aplicação deve ter o endpoint PUT /recipe
     [HttpPut("{name}")]
     public IActionResult Update(string name, [FromBody]Recipe recipe)
     {
@@ -74,6 +73,19 @@ public class RecipesController : ControllerBase
     [HttpDelete("{name}")]
     public IActionResult Delete(string name)
     {
-        throw new NotImplementedException();
+        bool existRecipe = _service.RecipeExists(name);
+        if (!existRecipe)
+        {
+            BadRequest($" A receita {name} não existe");
+        }
+        try
+        {
+            _service.DeleteRecipe(name);
+            return NoContent();
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
     }    
 }
