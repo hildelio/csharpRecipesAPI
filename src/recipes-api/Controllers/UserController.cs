@@ -20,7 +20,6 @@ public class UserController : ControllerBase
         this._service = service;        
     }
 
-    // 6 - Sua aplicação deve ter o endpoint GET /user/:email
     [HttpGet("{email}", Name = "GetUser")]
     public IActionResult Get(string email)
     {   
@@ -43,7 +42,12 @@ public class UserController : ControllerBase
     [HttpPost]
     public IActionResult Create([FromBody]User user)
     {
-        throw new NotImplementedException();
+        if (user == null)
+        {
+            return NotFound();
+        }
+        _service.AddUser(user);
+        return Created("", user);
     }
 
     // "8 - Sua aplicação deve ter o endpoint PUT /user
