@@ -69,7 +69,6 @@ public class RecipesController : ControllerBase
 
     }
 
-    // 5 - Sua aplicação deve ter o endpoint DEL /recipe
     [HttpDelete("{name}")]
     public IActionResult Delete(string name)
     {
