@@ -20,11 +20,15 @@ public class CommentController : ControllerBase
         this._service = service;        
     }
 
-    // 10 - Sua aplicação deve ter o endpoint POST /comment
     [HttpPost]
     public IActionResult Create([FromBody]Comment comment)
     {
-        throw new NotImplementedException();
+        if (comment == null)
+        {
+            return BadRequest("O Comentário não pode ser nulo");
+        };
+        _service.AddComment(comment);
+        return Created("", comment);
     }
 
     // 11 - Sua aplicação deve ter o endpoint GET /comment/:recipeName
