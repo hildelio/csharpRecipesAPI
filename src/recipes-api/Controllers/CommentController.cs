@@ -32,7 +32,6 @@ public class CommentController : ControllerBase
         return Created("", comment);
     }
 
-    // 11 - Sua aplicação deve ter o endpoint GET /comment/:recipeName
     [HttpGet("{name}", Name = "GetComment")]
     public IActionResult Get(string name)
     {
