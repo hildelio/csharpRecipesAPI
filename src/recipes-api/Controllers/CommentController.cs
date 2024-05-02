@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using System.Xml.Linq;
 
 namespace recipes_api.Controllers;
 
@@ -34,7 +35,12 @@ public class CommentController : ControllerBase
     // 11 - Sua aplicação deve ter o endpoint GET /comment/:recipeName
     [HttpGet("{name}", Name = "GetComment")]
     public IActionResult Get(string name)
-    {                
-        throw new NotImplementedException();                   
+    {
+        if (name == null)
+        {
+            return BadRequest("O nome não pode ser nulo");
+        };
+        List<Comment> comments = _service.GetComments(name);
+        return Ok(comments);
     }
 }
