@@ -59,12 +59,12 @@ public class UserController : ControllerBase
         bool existUser = _service.UserExists(email);
         if (!existUser)
         {
-            return BadRequest("Usuário não existe");
+            return NotFound("Usuário não existe");
         }
         try
         {
             _service.UpdateUser(user);
-            return NoContent();
+            return Ok();
         }
         catch (Exception ex)
         {
@@ -78,7 +78,7 @@ public class UserController : ControllerBase
         bool existUser = _service.UserExists(email);
         if (!existUser)
         {
-            return BadRequest("Usuário não existe");
+            return NotFound("Usuário não existe");
         }
         try
         {
